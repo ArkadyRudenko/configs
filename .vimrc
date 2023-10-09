@@ -13,28 +13,24 @@ set nocompatible
 filetype off
 
 call plug#begin()
-
 Plug 'terryma/vim-multiple-cursors'
-
+Plug 'jiangmiao/auto-pairs'
 Plug 'https://github.com/tpope/vim-commentary'
+" here blue terminal
 Plug 'chriskempson/base16-vim'
-
 " VIM enhancements
 Plug 'ciaranm/securemodelines'
 Plug 'vim-scripts/localvimrc'
 Plug 'justinmk/vim-sneak'
-
 " GUI enhancements
 Plug 'itchyny/lightline.vim'
 Plug 'w0rp/ale'
 Plug 'machakann/vim-highlightedyank'
-
 " Fuzzy finder
 Plug 'airblade/vim-rooter'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug '~/.fzf'
-
 " Semantic language support
 "Plug 'phildawes/racer'
 Plug 'autozimu/LanguageClient-neovim', {
@@ -47,24 +43,17 @@ Plug 'roxma/vim-hug-neovim-rpc'
 Plug 'roxma/nvim-yarp'
 Plug 'roxma/nvim-cm-racer'
 Plug 'junegunn/vader.vim'
-
-" Completion plugins
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-tmux'
-Plug 'ncm2/ncm2-path'
-
+" Completion plugins [this helped]
+"Plug 'ncm2/ncm2-bufword'
+"Plug 'ncm2/ncm2-tmux'
+"Plug 'ncm2/ncm2-path'
 " LanguageClient enhancements
 " Showing function signature and inline doc.
 Plug 'Shougo/echodoc.vim'
-
 " Syntactic language support
 " Plugin '~/dev/projects/simio', {'rtp': 'src/vim-syntax/'}
 Plug '~/dev/projects/api-soup', {'rtp': 'vim-syntax/'}
-" Plugin 'vim-scripts/gnuplot-syntax-highlighting'
-" Plugin 'treycordova/rustpeg.vim.git'
-" Plugin 'vim-scripts/haskell.vim'
 Plug 'cespare/vim-toml'
-" Plugin 'lervag/vim-latex'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'rust-lang/rust.vim'
 Plug 'fatih/vim-go'
@@ -72,15 +61,64 @@ Plug 'dag/vim-fish'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 
+Plug 'altercation/vim-colors-solarized'
+
+
+" Semantic language support
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/lsp_extensions.nvim'
+Plug 'hrsh7th/cmp-nvim-lsp', {'branch': 'main'}
+Plug 'hrsh7th/cmp-buffer', {'branch': 'main'}
+Plug 'hrsh7th/cmp-path', {'branch': 'main'}
+Plug 'hrsh7th/nvim-cmp', {'branch': 'main'}
+Plug 'ray-x/lsp_signature.nvim'
 call plug#end()
 
 let g:multi_cursor_select_all_word_key = '<C-s>'
 
-"----------
-"syntax on
-"colorscheme base16-atelier-dune
-syntax enable
-"filetype plugin indent on
+let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-tsserver', 'coc-rust-analyzer', 'coc-highlight', 'coc-python', 'coc-clangd', 'coc-diagnostic', 'coc-cmake', 'coc-go']
+"nmap <leader>rn <Plug>(coc-rename)
+nnoremap <silent> <F2> <Plug>(coc-rename)
+
+" GoTo code navigation
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+"---- completion
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+inoremap <silent><expr> <Tab>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
+
+"let g:AutoPairsFlyMode = 1
+
+autocmd VimEnter * call coc#config('list.height', &lines * 2 / 10)
+autocmd VimEnter * call coc#config('list.maxPreviewHeight', &lines * 6 / 10)
+
+"----------------------------------------------------------------------------
+"----------------------------------------------------------------------------
+"----------------------------------------------------------------------------
+
+"----------------------------------------------------------------------------
+"----------------------------------------------------------------------------
 "----------------------------------------------------------------------------
 
 runtime macros/matchit.vim
@@ -90,6 +128,16 @@ if has('nvim')
     set inccommand=nosplit
     noremap <C-q> :confirm qall<CR>
 end
+
+syntax enable
+let base16colorspace=256
+" Colors
+set background=dark
+"colorscheme base16-atelier-dune
+colorscheme base16-gruvbox-dark-hard
+"colorscheme base16-default-dark
+"
+hi Normal ctermbg=NONE
 
 if !has('gui_running')
   set t_Co=256
@@ -111,7 +159,7 @@ let g:secure_modelines_allowed_items = [
 
 
 " Base16
-let base16colorspace=256
+
 "let g:base16_shell_path="~/dev/others/base16/shell/scripts/"
 
 " Lightline
@@ -172,9 +220,9 @@ let g:LanguageClient_serverCommands = {
     \ 'rust': ['env', 'CARGO_TARGET_DIR=/home/arkady/.cargo/bin/rls', 'rls'],
     \ }
 let g:LanguageClient_autoStart = 1
-nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+"nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+"nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+"nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 
 " racer + rust
 " https://github.com/rust-lang/rust.vim/issues/192
@@ -192,15 +240,11 @@ autocmd BufEnter * call ncm2#enable_for_buffer()
 set completeopt=noinsert,menuone,noselect
 " tab to select
 " and don't hijack my enter key
-inoremap <expr><Tab> (pumvisible()?(empty(v:completed_item)?"\<C-n>":"\<C-y>"):"\<Tab>")
-inoremap <expr><CR> (pumvisible()?(empty(v:completed_item)?"\<CR>\<CR>":"\<C-y>"):"\<CR>")
+"inoremap <expr><Tab> (pumvisible()?(empty(v:completed_item)?"\<C-n>":"\<C-y>"):"\<Tab>")
+"inoremap <expr><CR> (pumvisible()?(empty(v:completed_item)?"\<CR>\<CR>":"\<C-y>"):"\<CR>")
 
 " Doxygen
 let mysyntaxfile='~/.vim/doxygen_load.vim'
-
-
-
-"..... Skiip Go
 
 " =============================================================================
 " # Editor settings
@@ -303,11 +347,6 @@ set showcmd " Show (partial) command in status line.
 set mouse=a " Enable mouse usage (all modes) in terminals
 set shortmess+=c " don't give |ins-completion-menu| messages.
 
-" Colors
-set background=dark
-colorscheme base16-atelier-dune
-hi Normal ctermbg=NONE
-
 " Show those damn hidden characters
 " Verbose: set listchars=nbsp:¬,eol:¶,extends:»,precedes:«,trail:•
 set nolist
@@ -342,8 +381,9 @@ noremap <leader>p :read !xsel --clipboard --output<cr>
 noremap <leader>c :w !xsel -ib<cr><cr>
 
 " <leader>s for Rg search
-noremap <leader>s :Rg
-let g:fzf_layout = { 'down': '~20%' }
+"noremap <leader>s :Rg
+noremap <leader>s :Ag
+let g:fzf_layout = { 'down': '~80%' }
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
