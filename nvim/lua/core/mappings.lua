@@ -4,6 +4,7 @@ vim.g.mapleader = " "
 vim.keymap.set('n', '<leader>e', ':Neotree float reveal<CR>')
 vim.keymap.set('n', '<leader>E', ':Neotree left reveal<CR>')
 vim.keymap.set('n', '<leader>o', ':Neotree float git_status<CR>')
+vim.keymap.set('n', '<leader>s', ':bd<CR>')
 
 -- Navigation
 vim.keymap.set('n', '<c-k>', ':wincmd k<CR>')
@@ -20,9 +21,10 @@ vim.keymap.set('n', '\\', ':split<CR>')
 vim.keymap.set('n', '<leader>w', ':w<CR>')
 vim.keymap.set('n', '<leader>x', ':BufferLinePickClose<CR>')
 vim.keymap.set('n', '<leader>X', ':BufferLineCloseRight<CR>')
-vim.keymap.set('n', '<leader>s', ':BufferLineSortByTabs<CR>')
+--vim.keymap.set('n', '<leader>s', ':BufferLineSortByTabs<CR>')
 vim.keymap.set('i', 'jj', '<Esc>')
 vim.keymap.set('n', '<leader>h', ':nohlsearch<CR>')
+vim.keymap.set('n', ';', ':')
 
 -- Tabs
 vim.keymap.set('n', '<Tab>', ':BufferLineCycleNext<CR>')
@@ -32,3 +34,8 @@ vim.keymap.set('n', '<s-Tab>', ':BufferLineCyclePrev<CR>')
 vim.keymap.set('n', '<leader>tf', ':ToggleTerm direction=float<CR>')
 vim.keymap.set('n', '<leader>th', ':ToggleTerm direction=horizontal<CR>')
 vim.keymap.set('n', '<leader>tv', ':ToggleTerm direction=vertical size=40<CR>')
+
+
+-- Nvim-tree
+vim.keymap.set('n', '<leader>r', ':NvimTreeToggle')
+-- vim.keymap.set('n', '<leader>th', ':ToggleTerm direction=horizontal<CR>')

@@ -9,6 +9,17 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+    -- {
+    --   "nvim-tree/nvim-tree.lua",
+    --   version = "*",
+    --   lazy = false,
+    --   dependencies = {
+    --     "nvim-tree/nvim-web-devicons",
+    --   },
+    --   config = function()
+    --     require("nvim-tree").setup {}
+    --   end,
+    -- },
     {
         'nvim-telescope/telescope.nvim',
         tag = '0.1.4',
@@ -18,6 +29,8 @@ require("lazy").setup({
         'elentok/format-on-save.nvim'
     },
     {'cooperuser/glowbeam.nvim'},
+    {'mfussenegger/nvim-dap'},
+    {'natecraddock/sessions.nvim'},
     {'joshdick/onedark.vim'},
     {'rebelot/kanagawa.nvim'},
     {'nvim-treesitter/nvim-treesitter'},

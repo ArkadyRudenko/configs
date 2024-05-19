@@ -25,6 +25,8 @@ format_on_save.setup({
     typescriptreact = formatters.prettierd,
     yaml = formatters.lsp,
     cpp = formatters.lsp,
+    c = formatters.lsp,
+    zig = formatters.lsp,
 
     -- Add your own shell formatters:
     myfiletype = formatters.shell({ cmd = { "myformatter", "%" } }),
@@ -47,12 +49,12 @@ format_on_save.setup({
     end}),
 
     -- Concatenate formatters
-    python = {
-      formatters.remove_trailing_whitespace,
-      formatters.shell({ cmd = "tidy-imports" }),
-      formatters.black,
-      formatters.ruff,
-    },
+    -- python = {
+    --   formatters.remove_trailing_whitespace,
+    --   formatters.shell({ cmd = "tidy-imports" }),
+    --   formatters.black,
+    --   formatters.ruff,
+    -- },
 
     -- Use a tempfile instead of stdin
     go = {
