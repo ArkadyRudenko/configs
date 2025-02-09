@@ -17,6 +17,7 @@ format_on_save.setup({
     openscad = formatters.lsp,
     python = formatters.black,
     rust = formatters.lsp,
+    -- go = formatters.lsp,
     scad = formatters.lsp,
     scss = formatters.lsp,
     sh = formatters.shfmt,

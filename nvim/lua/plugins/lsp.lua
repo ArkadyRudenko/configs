@@ -9,7 +9,6 @@ lspconfig.clangd.setup {}
 lspconfig.cssls.setup {
     capabilities = capabilities
 }
-lspconfig.golangci_lint_ls.setup {}
 lspconfig.rust_analyzer.setup {
   settings = {
     ['rust-analyzer'] = {
@@ -22,6 +21,22 @@ lspconfig.rust_analyzer.setup {
     },
   },
 }
+lspconfig.golangci_lint_ls.setup {}
+-- local lspconfig = require("lspconfig")
+-- lspconfig.gopls.setup({})
+lspconfig.gopls.setup({})
+
+-- lspconfig.yamlls.setup {
+--   on_attach = on_attach,
+--   capabilities = capabilities,
+--   settings = {
+--     yaml = {
+--       schemas = {
+--         ["https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/schemas/v3.0/schema.yaml"] = "/*"
+--       }
+--     }
+--   }
+-- }
 
 lspconfig['clangd'].setup({
     capabilities = capabilities,

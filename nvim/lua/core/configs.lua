@@ -12,6 +12,7 @@ vim.wo.linebreak = true
 vim.opt.virtualedit = "block"
 vim.opt.undofile = true
 vim.opt.shell = "/bin/bash"
+vim.opt.swapfile = false
 
 -- Mouse
 vim.opt.mouse = "a"
